@@ -1,0 +1,36 @@
+<script>
+	$('document').ready(function () {
+
+		document.getElementById("submit-button").addEventListener("click", validateDates);
+		//alert("To date must be older than from date.");
+
+	});
+
+
+	function validateDates() {
+		var fromDate = document.getElementById("datepickerFrom").value;
+		var toDate = document.getElementById("datepickerTo").value;
+		if (fromDate === "" || toDate === "") {
+
+			//alert("insert date.");
+			document.getElementById("errorMessage").textContent = "Please choose a date.";
+			var errorModal = new bootstrap.Modal(document.getElementById("errorModal"));
+			errorModal.show();
+			return false;
+
+		}
+		var fromDate = new Date(document.getElementById("datepickerFrom").value);
+		var toDate = new Date(document.getElementById("datepickerTo").value);
+
+		if (toDate.getTime() <= fromDate.getTime()) {
+			//alert("To date must be older than from date.");
+			document.getElementById("errorMessage").textContent = "To date must be older than from date";
+			var errorModal = new bootstrap.Modal(document.getElementById("errorModal"));
+			errorModal.show();
+			return false;
+		} else {
+			document.getElementById("my-form").submit();
+			return true;
+		}
+	}
+</script>

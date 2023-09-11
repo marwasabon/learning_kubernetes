@@ -1,0 +1,228 @@
+
+<div id="sidebar" class="slim active">
+	<div class="sidebar-wrapper shadow-sm slim active ">
+		<div class="sidebar-header position-relative">
+			<div class="logo">
+				<a href="#"> <img src="/assets/images/logo/zain_logo.png"
+					alt="Logo"> <img src="/assets/images/logo/zain_logo_text.png"
+					alt="Logo" class="logo-text">
+				</a>
+			</div>
+		</div>
+		<div class="sidebar-menu">
+			<ul class="menu">
+				<li class="sidebar-item"
+					th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a
+					th:href="@{/}" class="sidebar-link"> <span
+						class="icon-holder"> <svg
+								xmlns='http://www.w3.org/2000/svg' width='23.51' height='24'
+								viewBox='0 0 23.51 24'>
+                                        <g id='Stats'
+									transform='translate(-0.327)'>
+                                            <path id='Fill_312'
+									data-name='Fill 312'
+									d='M4.325,7.5H.979A.991.991,0,0,1,0,6.5V1A.991.991,0,0,1,.979,0H4.325A.991.991,0,0,1,5.3,1V6.5A.991.991,0,0,1,4.325,7.5ZM1.959,2V5.5H3.344V2Z'
+									transform='translate(2.286 13)' fill='#acbecf' />
+                                            <path id='Fill_313'
+									data-name='Fill 313'
+									d='M4.325,14H.979A.991.991,0,0,1,0,13V1A.991.991,0,0,1,.979,0H4.325A.991.991,0,0,1,5.3,1V13A.991.991,0,0,1,4.325,14ZM1.959,2V12H3.344V2Z'
+									transform='translate(9.43 6.5)' fill='#acbecf' />
+                                            <path id='Fill_314'
+									data-name='Fill 314'
+									d='M4.325,20.5H.979A.991.991,0,0,1,0,19.5V1A.991.991,0,0,1,.979,0H4.325A.991.991,0,0,1,5.3,1V19.5A.991.991,0,0,1,4.325,20.5ZM1.959,2V18.5H3.344V2Z'
+									transform='translate(16.574)' fill='#acbecf' />
+                                            <path id='Fill_315'
+									data-name='Fill 315'
+									d='M22.531,2H.98A.988.988,0,0,1,0,1,.992.992,0,0,1,.98,0H22.531a.992.992,0,0,1,.98,1,.988.988,0,0,1-.98,1'
+									transform='translate(0.327 22)' fill='#acbecf' />
+                                        </g>
+                                    </svg>
+
+					</span> <span class="title">Dashboard</span>
+				</a></li>
+
+				<li th:classappend="${#httpServletRequest.getRequestURI() =='shortcodes/list' ? 'active':''}"
+					sec:authorize="hasAnyAuthority('Corporate Sales Info','Corporate Business Solution','admin','user')"
+					class="sidebar-item  "><a th:href="@{/shortcodes/lists}"
+					class="sidebar-link"> <span class="icon-holder"> <svg
+								xmlns="http://www.w3.org/2000/svg" width="20" height="25.617"
+								viewBox="0 0 20 25.617">
+                                        <g id="Group_12840"
+									data-name="Group 12840"
+									transform="translate(-566.514 -1070.946)">
+                                            <rect id="Rectangle_16873"
+									data-name="Rectangle 16873" width="9.802" height="0.854"
+									transform="translate(570.617 1083.68)" fill="#a09fb9" />
+                                            <rect id="Rectangle_16874"
+									data-name="Rectangle 16874" width="9.802" height="0.854"
+									transform="translate(570.617 1086.172)" fill="#a09fb9" />
+                                            <path id="Path_6525"
+									data-name="Path 6525"
+									d="M587.967,1091.742a1.535,1.535,0,0,0-.453-1.092l-.241-.241a1.545,1.545,0,0,0-2.184,0l-3.818,3.818-1.932-1.932a1.545,1.545,0,0,0-2.185,0l-.241.241a1.546,1.546,0,0,0,0,2.184l1.932,1.932.594.614,1.218,1.218.605.605.1-.1.528-.51,1.218-1.218.6-.6-.011-.011,3.821-3.821A1.534,1.534,0,0,0,587.967,1091.742Zm-1.056.489-4.422,4.422.01.011-1.218,1.218-.01-.01-.01.01-1.218-1.218.01-.01-2.536-2.536a.691.691,0,0,1,0-.977l.241-.241a.69.69,0,0,1,.977,0l2.048,2.047a.691.691,0,0,0,.977,0l3.933-3.933a.691.691,0,0,1,.977,0l.241.241A.691.691,0,0,1,586.911,1092.231Z"
+									transform="translate(-1.453 -2.777)" fill="#a09fb9" />
+                                            <path id="Path_6526"
+									data-name="Path 6526"
+									d="M573.536,1094.855h-3.711a1.606,1.606,0,0,1-1.6-1.6v-14.783a1.6,1.6,0,0,1,1.583-1.6,2.557,2.557,0,0,0,2.415,2.3h6.6a2.555,2.555,0,0,0,2.413-2.285,1.6,1.6,0,0,1,1.447,1.588v4.463a.854.854,0,0,0,1.708,0v-4.463a3.307,3.307,0,0,0-3.149-3.295,2.592,2.592,0,0,0-2.221-2.319,2.506,2.506,0,0,0-2.337-1.909h-2.553a2.512,2.512,0,0,0-2.347,1.944,2.633,2.633,0,0,0-1.979,2.27,3.313,3.313,0,0,0-3.285,3.309v14.783a3.315,3.315,0,0,0,3.311,3.311h3.711a.854.854,0,1,0,0-1.708Zm-2.065-19.257c0-.566.343-1.045.748-1.045h1.158v-.854c0-.567.343-1.046.748-1.046h2.553c.405,0,.748.479.748,1.046v.854h1.391c.405,0,.748.479.748,1.045v.814c0,.567-.343,1.046-.748,1.046h-6.6c-.405,0-.748-.479-.748-1.046Z"
+									fill="#a09fb9" />
+                                        </g>
+                                    </svg>
+
+					</span> <span class="title">Shortcodes </span>
+				</a></li>
+				<li 	 sec:authorize="hasAnyAuthority('Corporate Business Solution','admin','user')"
+class="sidebar-item has-sub"
+					th:classappend="${#httpServletRequest.getRequestURI().endsWith('/list') ? 'active':''}">
+					<a href="" class="sidebar-link"> <span class="icon-holder">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24.606"
+								height="20.896" viewBox="0 0 24.606 20.896">
+								<g id="Group_9901" data-name="Group 9901"
+									transform="translate(-1191.113 -1074.67)">
+									<path id="Path_6470" data-name="Path 6470"
+									d="M1201.734,1082.237h0a4.4,4.4,0,0,1,1.721.348.834.834,0,1,0,.65-1.536,6.045,6.045,0,0,0-2.37-.48h-.007a6.105,6.105,0,1,0,6.1,6.1.834.834,0,0,0-1.668,0,4.437,4.437,0,1,1-4.435-4.437Z"
+									transform="translate(-0.749 -0.979)" fill="#acbecf" />
+									<path id="Path_6471" data-name="Path 6471"
+									d="M1210.055,1086.162a.835.835,0,0,0-.925.731,8.2,8.2,0,1,1-4.742-8.435.834.834,0,1,0,.692-1.518,9.873,9.873,0,1,0,5.707,10.147A.834.834,0,0,0,1210.055,1086.162Z"
+									transform="translate(0 -0.23)" fill="#acbecf" />
+									<path id="Path_6472" data-name="Path 6472"
+									d="M1217.2,1078.34c-.124-.408-.582-.421-1.161-.437-.49-.015-1.311-.038-1.527-.341s.028-1.087.175-1.555c.173-.553.309-.99-.037-1.241s-.792.054-1.08.259l-1.834,1.309c-1.476,1.052-1.9,2.394-1.2,3.646a.4.4,0,0,0-.214.059l-6.184,4.012a2.38,2.38,0,1,0,.471.69l6.168-4a.408.408,0,0,0,.155-.2,2.358,2.358,0,0,0,1.481.808,2.4,2.4,0,0,0,.287.017,3.607,3.607,0,0,0,2.068-.774l1.835-1.308C1216.889,1079.073,1217.325,1078.762,1217.2,1078.34Zm-14.714,8.019a.665.665,0,1,1,.665-.665A.665.665,0,0,1,1202.482,1086.359Zm11.8-6.451a2.607,2.607,0,0,1-1.772.608,1.606,1.606,0,0,1-1.126-.726c-.666-.934-.371-1.921.831-2.777l1.645-1.175a2.614,2.614,0,0,0-.033,2.207c.439.617,1.381.666,2.1.688Z"
+									transform="translate(-1.499 0)" fill="#acbecf" />
+								</g>
+							</svg>
+
+					</span> <span class="title">Selection Management</span>
+				</a>
+					<ul class="submenu"						
+
+						th:classappend="${#httpServletRequest.getRequestURI().endsWith('/list') ? 'active':''}">
+
+						<li class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/classes/list' ? 'active':''}"><a
+							th:href="@{/classes/list}">Classes list</a></li>
+
+
+						<li class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/statuses/list' ? 'active':''}"><a
+							th:href="@{/statuses/list}">Statuses list</a></li>
+
+						<li class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/segments/list' ? 'active':''}"><a
+							th:href="@{/segments/list}">Segments list</a></li>
+
+
+						<li class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/classes/classes-list' ? 'active':''}"><a
+							th:href="@{/additionalservice/list}">Additional Services list</a></li>
+
+
+						<li
+							sec:authorize="hasAnyAuthority('Specialist','Manager','TeamLeader','Director')"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/tasks/new-task' ? 'active':''}"
+							class="submenu-item "><a th:href="@{/tasks/new-task}">new
+								task</a></li>
+						<li
+							sec:authorize="hasAnyAuthority('Manager','TeamLeader','Director','Officer')"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/tasks/assign-task' ? 'active':''}"
+							class="submenu-item "><a th:href="@{/tasks/assign-task}">assign
+								task</a></li>
+					</ul>
+
+				</li>
+
+				<li sec:authorize="hasAnyAuthority('admin')"
+ 						class="sidebar-item has-sub"
+					th:classappend="${#httpServletRequest.getRequestURI().endsWith('/all') ? 'active':''}">
+					<a href="" class="sidebar-link"> <span class="icon-holder">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15.639"
+								height="24.205" viewBox="0 0 15.639 24.205">
+								<g id="Group_9879" data-name="Group 9879"
+									transform="translate(-985.004 -761.822)">
+									<path id="Path_6403" data-name="Path 6403"
+									d="M994,770.653a4.42,4.42,0,1,0-4.213-4.415A4.321,4.321,0,0,0,994,770.653Zm0-7.217a2.81,2.81,0,1,1-2.6,2.8A2.708,2.708,0,0,1,994,763.436Z"
+									transform="translate(-0.924)" fill="#acbecf" />
+									<path id="Path_6404" data-name="Path 6404"
+									d="M998.083,774.021h-2.67a.808.808,0,0,0-.615.284,4.52,4.52,0,0,1-3.948,0,.808.808,0,0,0-.615-.284h-2.67c-1.579,0-2.56.537-2.56,1.4v5.137c0,.786.815,1.3,2.157,1.386l1.508,5.095c.109.811,1.106,1.345,2.55,1.345h2.995c1.451,0,2.45-.539,2.552-1.356l1.38-5.071c1.543-.014,2.5-.548,2.5-1.4v-5.137C1000.643,774.558,999.662,774.021,998.083,774.021Zm.946,6.2a3.373,3.373,0,0,1-.946.119h-.555a.806.806,0,0,0-.779.595l-1.541,5.666a2.579,2.579,0,0,1-1,.166h-2.995a2.59,2.59,0,0,1-1-.166l-1.682-5.683a.807.807,0,0,0-.774-.578h-.2a3.373,3.373,0,0,1-.946-.119v-4.469a3.337,3.337,0,0,1,.946-.12h2.361a6.058,6.058,0,0,0,5.8,0h2.361a3.337,3.337,0,0,1,.946.12Z"
+									transform="translate(0 -2.357)" fill="#acbecf" />
+								</g>
+							</svg>
+							
+					</span> <span class="title">Users Management </span>
+				</a>
+
+
+					<ul class="submenu"
+						th:classappend="${#httpServletRequest.getRequestURI().endsWith('/all') ? 'active':''}">
+				<!--		<li
+							class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/team/team-develop' ? 'active':''}">
+							<a th:href="@{/team/team-develop}">Add New Training </a>
+						</li>-->
+						<li
+							sec:authorize="hasAnyAuthority('Specialist','Manager','TeamLeader','Director')"
+							class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/team/other-teamdevelop' ? 'active':''}">
+							<a th:href="@{/team/other-teamdevelop}">Development Add-ons</a>
+						</li>
+
+						<li class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/users/all' ? 'active':''}"><a
+							th:href="@{/users/all}">Users list</a></li>
+
+
+						<li class="submenu-item"
+							th:classappend="${#httpServletRequest.getRequestURI() == '/roles/all' ? 'active':''}"><a
+							th:href="@{/roles/all}">Roles list</a></li>
+					</ul>
+				</li>
+
+				<li th:classappend="${#httpServletRequest.getRequestURI() =='/report' ? 'active':''}"
+					sec:authorize="hasAnyAuthority('Corporate Sales Info','Corporate Business Solution','admin')"
+					class="sidebar-item  "><a th:href="@{/report}"
+					class="sidebar-link"> <span class="icon-holder"> <svg
+								xmlns="http://www.w3.org/2000/svg" width="20" height="25.617"
+								viewBox="0 0 20 25.617">
+                                        <g id="Group_12840"
+									data-name="Group 12840"
+									transform="translate(-566.514 -1070.946)">
+                                            <rect id="Rectangle_16873"
+									data-name="Rectangle 16873" width="9.802" height="0.854"
+									transform="translate(570.617 1083.68)" fill="#a09fb9" />
+                                            <rect id="Rectangle_16874"
+									data-name="Rectangle 16874" width="9.802" height="0.854"
+									transform="translate(570.617 1086.172)" fill="#a09fb9" />
+                                            <path id="Path_6525"
+									data-name="Path 6525"
+									d="M587.967,1091.742a1.535,1.535,0,0,0-.453-1.092l-.241-.241a1.545,1.545,0,0,0-2.184,0l-3.818,3.818-1.932-1.932a1.545,1.545,0,0,0-2.185,0l-.241.241a1.546,1.546,0,0,0,0,2.184l1.932,1.932.594.614,1.218,1.218.605.605.1-.1.528-.51,1.218-1.218.6-.6-.011-.011,3.821-3.821A1.534,1.534,0,0,0,587.967,1091.742Zm-1.056.489-4.422,4.422.01.011-1.218,1.218-.01-.01-.01.01-1.218-1.218.01-.01-2.536-2.536a.691.691,0,0,1,0-.977l.241-.241a.69.69,0,0,1,.977,0l2.048,2.047a.691.691,0,0,0,.977,0l3.933-3.933a.691.691,0,0,1,.977,0l.241.241A.691.691,0,0,1,586.911,1092.231Z"
+									transform="translate(-1.453 -2.777)" fill="#a09fb9" />
+                                            <path id="Path_6526"
+									data-name="Path 6526"
+									d="M573.536,1094.855h-3.711a1.606,1.606,0,0,1-1.6-1.6v-14.783a1.6,1.6,0,0,1,1.583-1.6,2.557,2.557,0,0,0,2.415,2.3h6.6a2.555,2.555,0,0,0,2.413-2.285,1.6,1.6,0,0,1,1.447,1.588v4.463a.854.854,0,0,0,1.708,0v-4.463a3.307,3.307,0,0,0-3.149-3.295,2.592,2.592,0,0,0-2.221-2.319,2.506,2.506,0,0,0-2.337-1.909h-2.553a2.512,2.512,0,0,0-2.347,1.944,2.633,2.633,0,0,0-1.979,2.27,3.313,3.313,0,0,0-3.285,3.309v14.783a3.315,3.315,0,0,0,3.311,3.311h3.711a.854.854,0,1,0,0-1.708Zm-2.065-19.257c0-.566.343-1.045.748-1.045h1.158v-.854c0-.567.343-1.046.748-1.046h2.553c.405,0,.748.479.748,1.046v.854h1.391c.405,0,.748.479.748,1.045v.814c0,.567-.343,1.046-.748,1.046h-6.6c-.405,0-.748-.479-.748-1.046Z"
+									fill="#a09fb9" />
+                                        </g>
+                                    </svg>
+
+					</span> <span class="title">Reports </span>
+				</a></li>
+
+
+
+			</ul>
+			<div
+				class="enterprise-credit bg-light border-top border-light px-2 w-100"
+				title="Enterprise Development Team - IT Department - Zain SD">
+
+				<p class="fw-bold linear-gradient m-0">
+					<span class="bullet"> <abbr title="Enterprise Development">ESD</abbr>
+					</span> <span class="bullet"> Technology-IT Development </span> &copy;
+					<script>
+						document.write(new Date().getFullYear());
+					</script>
+					<br>
+				<div class="credit-info">Enterprise Development Team - IT
+					Department - Zain SD</div>
+
+
+
+			</div>
+		</div>
+	</div>
+</div>

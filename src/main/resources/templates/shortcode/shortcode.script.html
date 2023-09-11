@@ -1,0 +1,749 @@
+<script>
+	$('document').ready(function () {
+
+		// datatable config
+		var gendataTable = $('#ShortCodeTable')
+
+			.DataTable(
+				{
+					searching: true,
+					ordering: true,
+					processing: true, // for show progress bar
+					serverSide: true, // for process server side
+					filter: true, //
+					// scrollY: 300,
+					deferRender: true,
+					scroller: true,
+					autoWidth: false,
+
+
+					ajax: {
+
+						contentType: 'application/json',
+						url: '/shortcode/all',
+						type: 'Get'
+
+					},
+
+
+					lengthMenu: [5, 10, 20, 50, 100],
+					columns: [
+
+						{
+							data: 'shortcodeNO',
+							render: function (data, type, row, meta) {
+								return meta.row + meta.settings._iDisplayStart + 1;
+							}
+						},
+						{
+							data: 'shortcodeNO'
+
+						},
+						{
+							data: 'followUpNumber'
+						},
+						{
+							data: 'customerName'
+						},
+						{
+							data: 'zainRequesterAccount'
+						},
+						{
+							data: 'shortCodePrice'
+						}
+						,
+						{
+							data: 'statuses.statusName',
+							render: function (data, _, _, _) {
+
+
+								/* if (data === "New") {
+									console.log("-----"+data);
+									$("#test").prop("disabled", true); 
+									} else { 
+										$("#test").prop("disabled", false); 
+									} */
+								return data
+
+							},
+
+						}
+						,
+						{
+							data: 'expiryDate',
+							render: function (data, _, _, _) {
+								return data ? moment(data).format('YYYY-MM-DD') : ''
+							}
+						},
+
+
+						{
+							data: 'comment'
+						},
+
+
+						{
+
+							data: 'shortcodeID',
+
+							"render": function (data,
+								type,
+								row,
+								meta) {
+								console.log(data);
+								$.ajax({
+									url: '/user/role',
+									type: 'GET',
+									success: function (role) {
+										$('table tbody tr').each(function () {
+
+											if (role.name === 'admin' || role.name === 'Corporate Business Solution') {
+												$(this).find('#edit').removeClass("d-none");
+												$(this).find('#delete').removeClass("d-none");
+											} else {
+												$(this).find('#delete').addClass("d-none");
+												$(this).find('#edit').addClass("d-none");
+
+											}
+										});
+									}
+								});
+								data = `
+                                	<div  class="d-flex justify-content-evenly">
+                                <a href="/routingMSISDNs/listroutingMSISDNs/${data}" id ="test"
+                                    class="btn btn-sm btn-primary mx-1">RoutingMSISDs</a>
+                         
+                         		<a href="/shortcodes/showDetails/${data}" class="btn btn-sm btn-light mx-1" title="show details">
+                                 <i class="fa fa-info"></i>
+                                                </a>
+                         
+                                <button id = "edit" class="btn btn-sm btn-light mx-1"
+                                    onclick="onEdit('${data}')"><i
+                                        class="fa fa-pen"></i></button>
+
+                                <button id = "delete" class="btn btn-sm text-danger mx-1 d-none" 
+                                    onclick="onDelete('${data}')"><i
+                                        class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        
+								 `
+
+
+
+								return data;
+							}
+
+						}
+
+
+
+
+					],
+
+					language: {
+						"processing": "Loading. Please wait ..."
+					}
+				});
+
+		/*   let valueInput = JSON.parse(data[0].valueInput);
+   
+		   let data = valueInput.data;
+   
+		   console.log(data);
+   */
+
+		$('#gdata_filter input').unbind();
+		$('#gdata_filter input').bind(
+			'keyup',
+			function (e) {
+				if (e.keyCode == 13) {
+
+					gendataTable.column(0)
+						.search(this.value)
+						.draw();
+				}
+			});
+
+
+
+
+
+	});
+	$(document).ready(function () {
+
+		$('#smartwizard').smartWizard({
+
+			selected: 0, // Initial selected step, 0 = first step
+			theme: 'dots', // theme for the wizard, related css need to include for other than default theme
+			justified: true, // Nav menu justification. true/false
+			transitionEffect: 'fade',
+			showStepURLhash: false,
+
+			toolbarSettings: {
+				toolbarPosition: 'top', // none, top, bottom, both
+				toolbarButtonPosition: 'center', // left, right, center
+				showNextButton: true, // show/hide a Next button
+				showPreviousButton: true, // show/hide a Previous button
+			}
+
+		});
+
+		$('#smartwizardEdit').smartWizard({
+
+			selected: 0, // Initial selected step, 0 = first step
+			theme: 'dots', // theme for the wizard, related css need to include for other than default theme
+			justified: true, // Nav menu justification. true/false
+
+			toolbarSettings: {
+				toolbarPosition: 'top', // none, top, bottom, both
+				toolbarButtonPosition: 'center', // left, right, center
+				showNextButton: false, // show/hide a Next button
+				showPreviousButton: false, // show/hide a Previous button
+			}
+
+		});
+		$("#smartwizard").on("leaveStep", function (e, anchorObject, stepIndex, nextStepIndex, stepDirection) {
+			// navigate to next step
+			console.log('Navigated to stepIndex ' + stepIndex + ' moving in stepDirection ' + stepDirection);
+
+			// check if current form step is valid
+			var elmForm = $('#form-step-' + stepIndex);
+			if (stepDirection == 'forward' && elmForm) {
+				if ($('#form').valid()) {
+					console.log('Form on Step ' + stepIndex + ' is valid');
+					return true;
+				} else {
+
+					console.log('Form on Step ' + stepIndex + ' is invalid');
+					return false;
+				}
+			}
+		});
+
+
+
+		$(document).ready(function () {
+			// If there are errors,in add form 
+
+
+			$("#form").submit(function (event) {
+				var hasErrors = false;
+
+				// Check each form field for errors
+				$(this).find(".form-control").each(function () {
+					if ($(this).hasClass("is-invalid")) {
+						hasErrors = true;
+					}
+				});
+
+				// If there are errors, prevent form submission and display error messages
+				if (hasErrors) {
+					event.preventDefault();
+					console.log("sjfnkjefnj---" + hasErrors);
+					$("#error-message").text("Please correct the errors in the form.");
+					$("#error-message").removeClass("d-none");
+				}
+				else {
+
+					$("#error-message").addClass("d-none");
+
+				}
+			});
+			// If there are errors,in add form 
+
+			$("#editForm").submit(function (event) {
+				var hasErrors = false;
+
+				// Check each form field for errors
+				$(this).find(".form-control").each(function () {
+					if ($(this).hasClass("is-invalid")) {
+						hasErrors = true;
+					}
+				});
+
+				// If there are errors, prevent form submission and display error messages
+				if (hasErrors) {
+					event.preventDefault();
+					console.log("sjfnkjefnj---" + hasErrors);
+					$("#error-message-edit").text("Please correct the errors in the form.");
+					$("#error-message-edit").removeClass("d-none");
+				}
+				else {
+
+					$("#error-message-edit").addClass("d-none");
+
+				}
+			});
+		});
+
+
+		//make fields readnoly when user role is not admin or corperate solution 
+
+		var inputVal = $('#readeOnlyInput').val();
+
+		if (inputVal === '1') {
+			$('#ShortCodeaccountNameEdit').attr('readonly', true);
+			$('#ShortCodecommentEdit').attr('readonly', true);
+			$('#ShortCodeexpiryDateEdit').attr('readonly', true);
+			$('#ShortCodeactivationDateEdit').attr('readonly', true);
+			$('#segments1').attr('readonly', true);
+			$('#zainRequesterAccountEdit').attr('readonly', true);
+			$('#ShortCodezainRequesterEmailEdit').attr('readonly', true);
+			$('#ShortCodestatusNameEdit2').attr('readonly', true);
+			$('#ShortCodeaserviceNameEdit2').attr('readonly', true);
+			$('#ShortCodeshortCodeclassNameEdit2').attr('readonly', true);
+			$('#ShortCodeshortCodePriceEdit').attr('readonly', true);
+			$('#ShortCodeNOEdit').attr('readonly', true);
+			$('#ShortCodefollowUpNumberEdit').attr('readonly', true);
+			$('#ShortCodecustomerNameEdit').attr('readonly', true);
+
+
+
+		}
+
+
+
+	});
+
+
+	// add modal 
+
+	$('#closenewModal').click(function () {
+		$('#newModal').modal('show');
+	});
+	$("#closeid").on("click", function () {
+		$('#editWarning').modal('hide');
+
+	});
+	$('#warningCloseBtn').click(function () {
+		$('#editWarning').modal('hide');
+		$('#newModal').modal('hide');
+		$('#smartwizard').smartWizard("reset");
+		reset_all_fields();
+	});
+
+	// for edit modal
+	$('#closeEditModal2').click(function () {
+		$('#editModal').modal('show');
+	});
+
+	$("#closeid2").on("click", function () {
+		$('#editWarning2').modal('hide');
+
+	});
+	$('#warningCloseBtn2').click(function () {
+		$('#editWarning2').modal('hide');
+		$('#editModal').modal('hide');
+		$('#smartwizardEdit').smartWizard("reset");
+		reset_all_fields();
+	});
+
+	/** validation **/
+
+
+	function validateShortcode(fieldId, errorMessage) {
+		var shortcode = document.getElementById("Shortcode_NO").value;
+		var field = document.getElementById(fieldId);
+		const shortcodeRegex = /^\d{4}$/;
+
+		var value = field.value.trim();
+		if (!shortcodeRegex.test(value)) {
+
+			field.setAttribute("class", "form-control is-invalid");
+			field.nextElementSibling.innerHTML = errorMessage;
+			//  alert("Shortcode must be a positive 4-digit number.");
+			return false;
+		}
+		else {
+			field.setAttribute("class", "form-control is-valid");
+			field.nextElementSibling.innerHTML = "";
+			return true;
+		}
+	}
+	//reset all fields after pressing close
+	function reset_all_fields() {
+		var form = document.getElementById("form");
+		var form2 = document.getElementById("editForm");
+		form.reset();
+		form2.reset();
+
+		// Get all required form fields
+		const requiredFields = $('input[required]');
+		const select = $('select[required]');
+
+		// Loop through each required form field
+		requiredFields.each(function () {
+			// Get the error message element associated with the form field
+			const $error = $(this).next('.error');
+
+			// Remove the error message text and hide the error message element
+			$error.text('').hide();
+
+			// Remove the "required" attribute from the form field
+			//$(this).removeAttr('required');
+		});
+		select.each(function () {
+			// Get the error message element associated with the form field
+			const $error = $(this).next('.error');
+
+			// Remove the error message text and hide the error message element
+			$error.text('').hide();
+
+			// Remove the "required" attribute from the form field
+			//$(this).removeAttr('required');
+		});
+		$('#form').find(".form-control").each(function () {
+
+			if ($(this).hasClass("is-invalid")) {
+
+				// Remove the error message text and hide the error message element
+				$(this).removeClass("in");
+				$(this).removeClass("error");
+				$(this).removeClass("blurred");
+				$(this).removeClass("is-invalid");
+				$("#error-message").addClass("d-none");
+
+			}
+			else
+				$(this).removeClass("is-valid");
+
+
+			//location.reload();
+
+		});
+		//edit form
+		$('#editForm').find(".form-control").each(function () {
+
+			if ($(this).hasClass("is-invalid")) {
+
+				// Remove the error message text and hide the error message element
+				$(this).removeClass("in");
+				$(this).removeClass("error");
+				$(this).removeClass("blurred");
+				$(this).removeClass("is-invalid");
+				$("#error-message-edit").addClass("d-none");
+
+			}
+			else
+				$(this).removeClass("is-valid");
+
+
+			//location.reload();
+
+		});
+
+	}
+	//for when status is renewal make sure the expiray date isnot empty 
+	$("#ShortCodestatusNameEdit2").change(function () {
+		var selectedStatus = $(this).val().trim();
+		var field = document.getElementById("ShortCodeexpiryDateEdit");
+		if (selectedStatus === '2') {
+			$('#ShortCodeexpiryDateEdit').focus();
+			$('#ShortCodeexpiryDateEdit').removeClass("is-valid")
+
+
+		} else
+			$('#ShortCodeexpiryDateEdit').reset();
+		$('#ShortCodeexpiryDateEdit').removeClass("blurred");
+		$('#ShortCodeexpiryDateEdit').removeClass("is-valid")
+		$('#ShortCodeexpiryDateEdit').removeClass("is-invalid")
+
+	});
+
+	function validateShortcodePrice(fieldId, errorMessage) {
+		var price = document.getElementById(fieldId).value
+		var field = document.getElementById(fieldId);
+		var value = field.value.trim();
+		if (price < 0 || value === "") {
+			field.setAttribute("class", "form-control is-invalid");
+			field.nextElementSibling.innerHTML = errorMessage;
+			//  alert("Shortcode must be a positive 4-digit number.");
+			return false;
+		}
+		else {
+			field.setAttribute("class", "form-control is-valid");
+			field.nextElementSibling.innerHTML = "";
+			return true;
+		}
+	}
+	function validateField(fieldId, errorMessage) {
+		var field = document.getElementById(fieldId);
+		var value = field.value.trim();
+
+		if (value === "") {
+			field.setAttribute("class", "form-control is-invalid");
+			field.nextElementSibling.innerHTML = errorMessage;
+			return false;
+		} else {
+			field.setAttribute("class", "form-control is-valid");
+			field.nextElementSibling.innerHTML = "";
+			return true;
+		}
+
+	}
+	function validatenumber(fieldId, errorMessage) {
+
+		var field2 = document.getElementById(fieldId);
+		var value = field2.value.trim();
+		var ck_phoneNumber = /^(00|\+249|0)?(9|1)\d{8}$/;
+
+		//var ck_phoneNumber = /^((00)?(\+249)|0)(((9)[0-9]{8})|((1)[0-9]{8}))|^9[0-9]{8}$/;
+		if (value === "") {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = errorMessage;
+			return false;
+		} else if (!ck_phoneNumber.test(value)) {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = errorMessage;
+			return false;
+		}
+		else {
+			field2.setAttribute("class", "form-control is-valid");
+			field2.nextElementSibling.innerHTML = "";
+			return true;
+		}
+
+	}
+	function validateAccount(fieldId, errorMessage) {
+		var field2 = document.getElementById(fieldId);
+		var value = field2.value.trim();
+		var regex = /^[\p{\u0600-\u06FF}\d\s]+|[a-zA-Z\d\s]+$/;
+
+
+		if (value === "") {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = "Please enter your " + fieldId;
+			return false;
+		} else if (!regex.test(value)) {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = errorMessage;
+			return false;
+		}
+		else {
+			field2.setAttribute("class", "form-control is-valid");
+			field2.nextElementSibling.innerHTML = "";
+			return true;
+		}
+
+	}
+	function validateName(fieldId, errorMessage) {
+		var field2 = document.getElementById(fieldId);
+		var value = field2.value.trim();
+		//var regex = /^[\u0600-\u06FF\s]+|[a-zA-Z\s]+$/;
+		const regex = /^([\p{\u0600-\u06FF}\s]+|[a-zA-Z\s]+)$/;
+
+
+		if (value === "") {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = "Please enter your " + fieldId;
+			return false;
+		} else if (!regex.test(value)) {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = errorMessage;
+			return false;
+		}
+		else {
+			field2.setAttribute("class", "form-control is-valid");
+			field2.nextElementSibling.innerHTML = "";
+			return true;
+		}
+
+	}
+	function validateEmail(fieldId, errorMessage) {
+		var field2 = document.getElementById(fieldId);
+		var value = field2.value.trim();
+		const regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
+
+
+		if (value === "") {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = "Please enter your " + fieldId;
+			return false;
+		} else if (!regex.test(value)) {
+			field2.setAttribute("class", "form-control is-invalid");
+			field2.nextElementSibling.innerHTML = errorMessage;
+			return false;
+		}
+		else {
+			field2.setAttribute("class", "form-control is-valid");
+			field2.nextElementSibling.innerHTML = "";
+			return true;
+		}
+
+	}
+	function validateForm() {
+		var fromDate = document.getElementById("ShortCodeactivationDateEdit").value;
+		var toDate = document.getElementById("ShortCodeexpiryDateEdit").value;
+		var selectedOption = $("#ShortCodestatusNameEdit2");
+
+
+
+		//var currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+		var currentDate = new Date().toISOString().split('T')[0];
+
+		console.log(currentDate)
+		console.log(fromDate)
+		console.log(toDate)
+
+		// Check if both dates are empty
+		if (fromDate.trim() === "" && toDate.trim() === "") {
+			//alert("Please enter both From and To dates.");
+			return false;
+		}
+
+		// Check if from date is greater than to date
+		if (fromDate < currentDate) {
+			document.getElementById("ShortCodeactivationDateEdit").setAttribute("class", "form-control is-invalid");
+			document.getElementById("ShortCodeactivationDateEdit").nextElementSibling.innerHTML =
+				"Activation date is less than the System date";
+			return false;
+		}
+		if (toDate < currentDate) {
+			document.getElementById("ShortCodeexpiryDateEdit").setAttribute("class", "form-control is-invalid");
+			document.getElementById("ShortCodeexpiryDateEdit").nextElementSibling.innerHTML =
+				"Expiry date is less than the System date";
+			return false;
+		}
+
+
+		document.getElementById("ShortCodeexpiryDateEdit").setAttribute("class", "form-control is-valid");
+
+		document.getElementById("ShortCodeactivationDateEdit").setAttribute("class", "form-control is-valid");
+
+		return true;
+
+	}
+	//validad for edit form 
+	function validateForm_add() {
+		var fromDate = document.getElementById("activationDate").value;
+		var toDate = document.getElementById("expiryDate").value;
+
+		var currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+
+		console.log(currentDate)
+		console.log(fromDate)
+		console.log(toDate)
+
+		// Check if both dates are empty
+		if (fromDate.trim() === "" && toDate.trim() === "") {
+			//alert("Please enter both From and To dates.");
+			return false;
+		}
+
+		// Check if from date is greater than to date
+		if (fromDate < currentDate) {
+			document.getElementById("activationDate").setAttribute("class", "form-control is-invalid");
+			document.getElementById("activationDate").nextElementSibling.innerHTML =
+				"Activation date is less than the System date";
+			return false;
+		}
+		if (toDate < currentDate) {
+			document.getElementById("expiryDate").setAttribute("class", "form-control is-invalid");
+			document.getElementById("expiryDate").nextElementSibling.innerHTML =
+				"Expiry date is less than the System date";
+			return false;
+		}
+		document.getElementById("activationDate").setAttribute("class", "form-control is-valid");
+		document.getElementById("expiryDate").setAttribute("class", "form-control is-valid");
+
+		return true;
+	}
+
+
+
+	// handle edit
+	function onEdit(id) {
+		if (!id) {
+			console.error(`onEdit: failed to parse id value, passed id is ${id}`);
+			return
+		}
+
+
+
+		console.log('onEdit: row id:', id);
+		let url = `/shortcodes/getShortCode?ShortCodeID=${id}`;
+		$.get(url, function (ShortCode, status) {
+			$("#ShortCodeIDEdit").val(ShortCode.shortcodeID);
+			$("#ShortCodeNOEdit").val(ShortCode.shortcodeNO);
+			$("#ShortCodeaccountNameEdit").val(ShortCode.accountName);
+			$("#ShortCodecustomerNameEdit").val(ShortCode.customerName);
+			$("#ShortCodefollowUpNumberEdit").val(ShortCode.followUpNumber);
+			$("#ShortCodeshortCodePriceEdit").val(ShortCode.shortCodePrice);
+			$("#zainRequesterAccountEdit").val(ShortCode.zainRequesterAccount);
+			$("#ShortCodezainRequesterEmailEdit").val(ShortCode.zainRequesterEmail);
+			$("#ShortCodestatusIDEdit").val(ShortCode.statuses.statusName);
+			$("#ShortCodeactivationDateEdit").val(moment(ShortCode.activationDate).format('YYYY-MM-DD'));
+			$("#ShortCodeexpiryDateEdit").val(moment(ShortCode.expiryDate).format('YYYY-MM-DD'));
+			$("#ShortCodecommentEdit").val(ShortCode.comment);
+
+
+			//get the selected value and show it in selection 
+			if (ShortCode.statuses == null) {
+				var statusID = "";
+				$("select[name='statuses'] option[value='" + statusID + "']").prop("selected", true);
+			}
+			else
+				statusID = ShortCode.statuses.statusID
+			$("select[name='statuses'] option[value='" + statusID + "']").prop("selected", true);
+
+
+
+			//get the selected value and show it in selection 
+			if (ShortCode.classes == null) {
+				var classID = "";
+				$("select[name='classes'] option[value='" + "']").prop("selected", true);
+			}
+			else
+				classID = ShortCode.classes.classID
+			$("select[name='classes'] option[value='" + classID + "']").prop("selected", true);
+
+
+			//get the selected value and show it in selection 
+			if (ShortCode.additionalServices == null) {
+				var asID = "";
+				$("select[name='AdditionalServices'] option[value='" + "']").prop("selected", true);
+			}
+			else
+				asID = ShortCode.additionalServices.aserviceID
+			$("select[name='AdditionalServices'] option[value='" + asID + "']").prop("selected", true);
+
+			//get the selected value and show it in selection 
+			if (ShortCode.segments == null) {
+				var segmentID = "";
+				$("select[name='segments'] option[value='" + "']").prop("selected", true);
+			}
+			else
+				segmentID = ShortCode.segments.segmentID
+			$("select[name='segments'] option[value='" + segmentID + "']").prop("selected", true);
+
+
+
+
+
+			new bootstrap.Modal('#editModal').toggle()
+			//$('#smartwizardEdit').smartWizard("reset");
+
+
+		});
+	}
+	// handle delete
+	function onDelete(id) {
+		console.log('onDelete: row id:', id);
+
+		let url = `/shortcodes/deleteShortCode?ShortCodeID=${id}`
+		$('#deleteModal #delRef').attr('href', url);
+		new bootstrap.Modal('#deleteModal').toggle();
+	}
+
+
+
+	$('#closenewModal').click(function () {
+		$('#editWarning').modal('show');
+	});
+	$('#closeEditModal2').click(function () {
+		$('#editWarning2').modal('show');
+	});
+
+
+</script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="frag/head">
+</th:block>
+
+<body>
+	<div id="app">
+		<th:block th:replace="frag/aside">
+		</th:block>
+		<div id="main" class='layout-slim-navbar'>
+			<th:block th:replace="frag/header">
+			</th:block>
+			<div id="main-content">
+				<div class="row" style="margin-top: 50px;">
+
+					<div class="col-md-8 offset-2">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title"> ShortCodes Reports </h4>
+								<p> Generates an Excel sheet for shotrcodes with a creation date range.</p>
+							</div>
+							<div class="card-body">
+								<form action="#" th:action="@{/generate}"  id = "my-form" th:object="${report}" method="post">
+
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>From</label> <input class="form-control" type="date"
+													id="datepickerFrom" name="fromDate" required>
+
+											</div>
+										</div>
+
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>To</label> <input class="form-control" type="date"
+													id="datepickerTo" name="toDate" required>
+
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="update ml-auto mr-auto">
+											<button class="btn btn-primary"  id ="submit-button" type="button">Generate Report</button>
+
+
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="modal" id="errorModal" tabindex="-1">
+						<div class="modal-dialog" style="border-color: red;">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" style="color: red;">Error</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p id="errorMessage"></p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			<th:block th:replace="frag/scripts"></th:block>
+
+		<script th:replace="report/script.html"></script>
+
+
+</body>
+
+
+</html>

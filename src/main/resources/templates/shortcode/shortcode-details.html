@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="frag/head">
+</th:block>
+
+<body>
+	<div id="app">
+		<th:block th:replace="frag/aside">
+		</th:block>
+		<div id="main" class='layout-slim-navbar'>
+			<th:block th:replace="frag/header">
+			</th:block>
+			<div id="main-content">
+				<div class="row">
+
+					<div class="col-12">
+						<div class="col-12 my-2">
+							<div class="bg-white p-2 shadow-sm w-100 rounded">
+								<div class="d-flex align-items-center">
+									<a href="/shortcodes/lists#form-step-1" class="btn btn-light me-3">
+										<i class="fa fa-arrow-left"></i>
+									</a>
+									<h6 class="m-0 text-gray-600">
+										ShortCode
+										<span class="mx-1 fw-bolder" th:text="'ID#' + ${shortcode.shortcodeID}"></span>
+										Details
+									</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 mb-3">
+						<div class="card shadow-sm">
+							<div class="card-header">
+								<h5 class="">ShortCode Info</h5>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">No</h6>
+									</div>
+									<div class="col-sm-6 text-secondary" th:text="${shortcode.shortcodeNO}"></div>
+								</div>
+								<hr>
+								<!-- Repeat the above code block for the next 14 data fields -->
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Price</h6>
+									</div>
+									<div class="col-sm-6 text-secondary" th:text="${shortcode.shortCodePrice}"></div>
+
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Class</h6>
+									</div>
+
+									<div class="col-sm-6 text-secondary"
+										th:text="${shortcode.classes != null ? shortcode.classes.className:'NA'}"></div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Status</h6>
+									</div>
+									<div class="col-sm-6 text-secondary" th:text="${shortcode.statuses.statusName}">
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Segment</h6>
+									</div>
+									<div class="col-sm-6 text-secondary" th:text="${shortcode.segments.segmentName}">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<div class="card shadow-sm">
+							<div class="card-header">
+								<h5 class=""> </h5>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Additional Service</h6>
+									</div>
+									<div class="col-sm-6 text-secondary"
+										th:text="${shortcode.additionalServices != null ? shortcode.additionalServices.aserviceName :'NA'}">
+									</div>
+								</div>
+								<hr>
+								<!-- Routing MSISDNs should be testing when i get feedback -->
+
+
+
+								<div class="row" th:if="${shortcode.routingMSISDNs}">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Routing MSISDNs</h6>
+									</div>
+									<div class="col-sm-6">
+										<span th:each="msisdn : ${shortcode.routingMSISDNs}"
+											th:text="${msisdn.routingMSISDN} + ' '"></span>
+									</div>
+								</div>
+
+								<div class="row" th:unless="${shortcode.routingMSISDNs}">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Routing MSISDNs</h6>
+									</div>
+									<div class="col-sm-6 text-secondary">NA</div>
+								</div>
+
+								<hr>
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Activation Date</h6>
+									</div>
+									<div class="col-sm-6 text-secondary"
+										th:text="${#dates.format(shortcode.activationDate,'yyyy-MM-dd')}"></div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Expiry Date</h6>
+									</div>
+									<div class="col-sm-6 text-secondary"
+										th:text="${#dates.format(shortcode.expiryDate,'yyyy-MM-dd')}"></div>
+
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-6">
+										<h6 class="mb-0">Comment</h6>
+									</div>
+									<div class="col-sm-6 text-secondary" th:text="${shortcode.comment}"></div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="card shadow-sm">
+
+
+						<div class="card-header">
+							<h5 class="">Account Info </h5>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Account Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.accountName}"></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Customer Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.customerName}"></div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Follow-up Number</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.followUpNumber}"></div>
+
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Zain Requester/Account Manager Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.zainRequesterAccount}">
+								</div>
+							</div>
+							<hr>
+
+
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Zain Requester/Account Manager email</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.zainRequesterEmail}">
+								</div>
+
+
+							</div>
+							<hr>
+
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Created By</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.createdBy}"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Created By Role</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${shortcode.createdByRole}"></div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Creation date</h6>
+								</div>
+								<div class="col-sm-9 text-secondary"
+									th:text="${#dates.format(shortcode.creationDate,'yyyy-MM-dd')}"></div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+
+
+	</div>
+	</div>
+
+	<th:block th:replace="frag/scripts"></th:block>
+
+
+	<script th:replace="shortcode/shortcode.script"></script>
+	</div>
+
+</body>
+
+</html>

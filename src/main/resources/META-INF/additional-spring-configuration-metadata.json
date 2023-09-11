@@ -1,0 +1,42 @@
+{"properties": [
+  {
+    "name": "ldap.base.dn",
+    "type": "java.lang.String",
+    "description": "A description for 'ldap.base.dn'"
+  },
+  {
+    "name": "ldap.domain",
+    "type": "java.lang.String",
+    "description": "A description for 'ldap.domain'"
+  },
+  {
+    "name": "ldap.urls",
+    "type": "java.lang.String",
+    "description": "A description for 'ldap.urls'"
+  },
+  {
+    "name": "jmr.url",
+    "type": "java.lang.String",
+    "description": "A description for 'jmr.url'"
+  },
+  {
+    "name": "jmr.account",
+    "type": "java.lang.String",
+    "description": "A description for 'jmr.account'"
+  },
+  {
+    "name": "jmr.password",
+    "type": "java.lang.String",
+    "description": "A description for 'jmr.password'"
+  },
+  {
+    "name": "jmr.sender",
+    "type": "java.lang.String",
+    "description": "A description for 'jmr.sender'"
+  },
+  {
+    "name": "ldap.urls",
+    "type": "java.lang.String",
+    "description": "A description for 'ldap.urls'"
+  }
+]}

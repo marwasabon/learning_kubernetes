@@ -1,0 +1,301 @@
+.separate-rows tbody td,
+.separate-rows tbody th {
+  padding: 6px 3px 6px 22px !important;
+}
+
+ /* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} 
+
+/* fullwidith modal */
+
+.card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 1.25rem;
+}
+
+.full_modal-dialog {
+  left: 40px;
+  right: 50px;
+  width: 90% !important;
+  height: 100% !important;
+  min-width: 90% !important;
+  min-height: 100% !important;
+  max-width: 90% !important;
+  max-height: 100% !important;
+  padding: 0 !important;
+  overflow-y: initial !important;
+}
+
+.full_modal-content {
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  overflow-y: initial !important;
+}
+/* by default use small pagination component */
+.pagination {
+  --bs-pagination-padding-x: 0.5rem;
+  --bs-pagination-padding-y: 0.25rem;
+  --bs-pagination-font-size: 0.875rem;
+  --bs-pagination-border-radius: 0.2rem;
+}
+
+/* icon color */
+.form-group[class*="has-icon-"] .form-control:focus ~ .form-control-icon i,
+.form-group[class*="has-icon-"] .form-control:focus ~ .form-control-icon svg {
+  color: var(--bs-primary);
+}
+
+/* sticky header */
+
+header {
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
+#auth #auth-right {
+  background: url(../../../assets/images/bg/Illustration.png),
+    linear-gradient(90deg, #f2f7ff, #f2f7ff);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 600px;
+  height: 100%;
+}
+
+.form-select {
+  padding: 0.575rem 0.75rem;
+  line-height: 1.4;
+  background-size: 15px 11.4px;
+}
+
+.sidebar-wrapper .menu .submenu .submenu-item a {
+  font-size: 0.75rem;
+}
+
+nav .user-name h6 {
+  font-size: 0.7rem;
+}
+
+nav .user-name p {
+  font-size: 0.6rem;
+}
+
+/* avatars */
+.avatar {
+  --bs-bg-opacity: 1;
+}
+
+bg-a,
+bg-b,
+bg-c {
+  background-color: #6610f2 !important;
+}
+
+.bg-d,
+.bg-e,
+.bg-f {
+  background-color: #dc3545 !important;
+}
+
+.bg-g,
+.bg-h,
+.bg-i {
+  background-color: #198754 !important;
+}
+
+.bg-j,
+.bg-k,
+.bg-l {
+  background-color: #ffc107 !important;
+}
+
+.bg-m,
+.bg-n,
+.bg-o {
+  background-color: #6610f2 !important;
+}
+
+.bg-p,
+.bg-q,
+.bg-r {
+  background-color: #d63384 !important;
+}
+
+.bg-s,
+.bg-t,
+.bg-u {
+  background-color: #32b3ac !important;
+}
+
+.bg-v,
+.bg-w,
+.bg-x {
+  background-color: #6610f2 !important;
+}
+
+.bg-y,
+.bg-z {
+  background-color: #d63384 !important;
+}
+
+ul.menu {
+  text-transform: capitalize;
+}
+
+label {
+  text-transform: uppercase;
+}
+
+.text-gray-700 {
+  color: #41464b;
+}
+
+label.error {
+  color: red;
+}
+
+/* enterprise credit */
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-menu {
+  height: 100%;
+}
+
+.enterprise-credit {
+  padding: 7px 11px;
+  font-size: 9px;
+  color: #495057;
+  margin-top: 68%;
+  display: none;
+  position: absolute;
+  bottom: 5px;
+  overflow: hidden;
+}
+
+.enterprise-credit .credit-info {
+  transform: translateX(-500px);
+  opacity: 0;
+  transition: transform 550ms 50ms;
+  height: 0px;
+}
+
+.enterprise-credit:hover .credit-info {
+  transform: none;
+  opacity: 1;
+  height: auto;
+}
+
+#sidebar.active .enterprise-credit {
+  display: block;
+}
+
+/* gradient text*/
+
+.radial-gradient {
+  --web-kit-background: radial-gradient(
+    circle,
+    #9c27b0 0%,
+    #3f51b5 21%,
+    #f44336 51%,
+    #673ab7 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  max-width: max-content;
+}
+
+.linear-gradient {
+  background: -webkit-linear-gradient(0deg, #9c27b0 0%, #009688 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  max-width: max-content;
+}
+
+/* bullet circle */
+.bullet:after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background-color: #607d8b;
+  border-radius: 100%;
+  padding: 2px;
+  margin: 1px 4px;
+  background-clip: border-box;
+}

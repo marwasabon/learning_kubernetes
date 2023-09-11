@@ -1,0 +1,213 @@
+<script>
+	$('document').ready(function () {
+		const toggle = document.getElementById('toggle');
+		const toggleValue = document.getElementById('toggle-value');
+
+		toggle.addEventListener('change', function () {
+			if (this.checked) {
+				toggleValue.value = '1';
+			} else {
+				toggleValue.value = '0';
+			}
+		});
+
+		const toggle1 = document.getElementById('toggle1');
+		const toggleValue1 = document.getElementById('toggle-value1');
+
+		toggle1.addEventListener('change', function () {
+			if (this.checked) {
+				toggleValue1.value = '1';
+			} else {
+				toggleValue1.value = '0';
+			}
+		});
+
+		// datatable config
+		console.log("are you working");
+		var gendataTable = $('#UserTable')
+
+			.DataTable(
+				{
+					ajax: {
+
+						contentType: 'application/json',
+						url: '/user/all',
+						type: 'Get'
+
+					},
+					lengthMenu: [5, 10, 20, 50, 100],
+					columns: [
+
+						{
+							data: 'userName',
+							render: function (data, type, row, meta) {
+								return meta.row + meta.settings._iDisplayStart + 1;
+							}
+						},
+						{
+							data: 'userName'
+						},
+						{
+							data: 'fullName'
+						},
+						{
+							data: 'status', render: function (data, _, _, _) {
+
+								if (data == '0')
+
+									return "Inative";
+								else if (data == '1') return "Active";
+
+							},
+						},
+						{
+							data: 'email'
+						},
+						{
+							data: 'role.name'
+						},
+						{
+
+							data: 'ID',
+							"render": function (data,
+								type,
+								row,
+								meta) {
+
+								data = `
+                                            
+
+                                                <button class="btn btn-sm btn-light mx-1" onclick="onEdit(${data})"><i class="fa fa-pen"></i></button>
+
+                                                <button class="btn btn-sm text-danger mx-1" onclick="onDelete(${data})"><i class="fa fa-trash"></i></button>
+												
+													`
+								return data;
+							}
+
+						}
+
+
+
+
+					],
+
+					language: {
+						"processing": "Loading. Please wait ..."
+					}
+				});
+
+		$('#gdata_filter input').unbind();
+		$('#gdata_filter input').bind(
+			'keyup',
+			function (e) {
+				if (e.keyCode == 13) {
+
+					gendataTable.column(0)
+						.search(this.value)
+						.draw();
+				}
+			});
+
+
+
+		$("#updateUserForm").submit(function (e) {
+			e.preventDefault(); // prevent form submission
+
+			// show confirmation dialog box
+			if (confirm("Are you sure you want to change your role? You will be logged out after saving changes.")) {
+				// submit form
+				$.ajax({
+					type: "POST",
+					url: "/users/updateUser",
+					data: $(this).serialize(),
+					success: function (data) {
+						// display success message
+						alert("User updated successfully!");
+
+						// display warning message and log out user
+						alert("Your role has been updated. Please log in again.");
+						window.location.href = "/logout"; // redirect to logout URL
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						// display error message
+						alert("Error updating user: " + errorThrown);
+					}
+				});
+			}
+		});
+	});
+
+	// handle edit
+	function onEdit(id) {
+		console.log('onEdit: row id:', id);
+		let url = `/users/getUser?UserID=${id}`;
+
+
+
+		$.get(url, function (user, status) {
+
+			$("#UserIDEdit").val(user.ID);
+			$("#UserNameEdit").val(user.userName);
+			$("#toggle-value").val(user.status);
+			$("#UserNameEdit2").val(user.fullName);
+			$("#UserEmailEdit").val(user.email);
+
+			//$("#roles").val(user.roles.code);
+			// Toggle slider switch based on status value
+			const sliderSwitch = document.getElementById('toggle1');
+			if (user.status === 1) {
+				$("input[type='checkbox']").prop("checked", true);
+
+			} else if (user.status === 0) {
+				$("input[type='checkbox']").prop("checked", false);
+			}
+
+			if (user.role == null) {
+				var roleID = "";
+				$("select[name='role'] option[value='" + roleID + "']").prop("selected", true);
+			}
+			else
+				roleID = user.role.id
+			$("select[name='role'] option[value='" + roleID + "']").prop("selected", true);
+
+			// show the modal
+			new bootstrap.Modal('#editModal').toggle()
+
+
+
+		});
+	}
+	// handle delete
+	function onDelete(id) {
+		console.log('onDelete: row id:', id);
+
+		let url = `/users/deleteUser?UserID=${id}`
+		$('#deleteModal #delRef').attr('href', url);
+		new bootstrap.Modal('#deleteModal').toggle();
+	}
+	// handle if the user changed his own role
+
+	$(document).ready(function () {
+		$('#roles').change(function () {
+			var newRole = $(this).val();
+			if (newRole !== '<%= User.getRole().name %>') {
+ 				$('#warning-message').hide();
+ 				$.post('/users/check', $('#updateform').serialize(), function (response) {
+					if (response.isRoleChanged) {
+						$('#warning-message').show();
+
+					} else {
+						// Hide warning message and show success message
+						$('#warning-message').hide();
+
+					}
+
+
+				});
+
+			}
+		});
+	});
+
+</script>

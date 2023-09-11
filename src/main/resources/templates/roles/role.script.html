@@ -1,0 +1,102 @@
+
+<script>
+    $('document').ready(function () {
+
+        // datatable config
+console.log("are you working");
+        var gendataTable = $('#RoleTable')
+        
+            .DataTable(
+                {
+                    ajax: {
+
+                        contentType: 'application/json',
+                        url: '/role/all',
+                        type: 'Get'
+
+                    },
+                    lengthMenu: [5, 10, 20, 50, 100],
+                    columns: [
+
+                       
+                        {
+                            data: 'name'
+                        },
+                     {
+                            data: 'code'
+                        },
+                    
+
+                        {  data: 'id',
+                            "render": function (data,
+                                type,
+                                row,
+                                meta) {
+
+                                data = `
+                                            
+
+                                                <button class="btn btn-sm btn-light mx-1" onclick="onEdit(${data})"><i class="fa fa-pen"></i></button>
+
+                                                <button class="btn btn-sm text-danger mx-1" onclick="onDelete(${data})"><i class="fa fa-trash"></i></button>
+												
+													`
+                                return data;
+                            }
+
+                        }
+                        
+                   
+                     
+
+                    ],
+                    
+                    language: {
+                        "processing": "Loading. Please wait ..."
+                    }
+                });
+
+        $('#gdata_filter input').unbind();
+        $('#gdata_filter input').bind(
+            'keyup',
+            function (e) {
+                if (e.keyCode == 13) {
+
+                    gendataTable.column(0)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+                
+
+  
+    });
+
+    // handle edit
+    function onEdit(id) {
+        console.log('onEdit: row id:', id);
+        let url = `/roles/getRole?RoleID=${id}`;
+        $.get(url, function (Role, status) {
+
+            $("#RoleIDEdit").val(Role.id);
+            $("#RoleNameEdit").val(Role.name);
+            $("#RoleCodeEdit").val(Role.code);
+
+
+            // show the modal
+            new bootstrap.Modal('#editModal').toggle()
+
+    
+   
+        });
+    }
+    // handle delete
+    function onDelete(id) {
+        console.log('onDelete: row id:', id);
+
+        let url = `/roles/deleteRole?RoleID=${id}`
+        $('#deleteModal #delRef').attr('href', url);
+        new bootstrap.Modal('#deleteModal').toggle();
+    }  
+ 
+</script>

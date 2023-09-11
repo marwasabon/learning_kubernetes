@@ -1,0 +1,340 @@
+<script>
+
+	$('document').ready(function () {
+
+		// datatable config
+		var gendataTable = $('#RoutingMSISDNsTable')
+
+			.DataTable(
+				{
+					searching: true,
+					ordering: true,
+					processing: true, // for show progress bar
+					serverSide: true, // for process server side
+					filter: true, //
+					// scrollY: 300,
+					deferRender: true,
+					scroller: true,
+					autoWidth: false,
+
+					ajax: {
+
+						contentType: 'application/json',
+
+						url: '/api/routingMSISDNs/[[${shortcodeID}]]',
+						type: 'Get'
+
+					},
+					"columnDefs": [
+						{
+							"targets": 0,
+							"title": "#",
+							"data": null,
+							"render": function (data, type, row, meta) {
+								return meta.row + 1;
+							}
+						}
+					]
+					,
+
+					lengthMenu: [5, 10, 20, 50, 100],
+					columns: [
+
+						{
+							data: 'routingMSISDN',
+
+							render: function (data, type, row, meta) {
+								return meta.row + meta.settings._iDisplayStart + 1;
+
+							}
+
+						}
+
+
+						,
+						{data: 'routingMSISDN'},
+
+						{
+
+							data: 'routingMSISDNID',
+							"render": function (data,
+								type,
+								row,
+								meta) {
+								$.ajax({
+									url: '/user/role',
+									type: 'GET',
+									success: function (role) {
+										// Use the role to show/hide buttons
+										$('table tbody tr').each(function () {
+
+											if (role.name !== 'admin' && role.name !== 'Corporate Business Solution') {
+												gendataTable.column(2).visible(false);
+											}
+										});
+									}
+
+								});
+
+								data = `
+                                            
+
+                                <button id = "edit" class="btn btn-sm btn-light mx-1 " onclick="onEdit(${data})"><i class="fa fa-pen"></i></button>
+
+                                <button id = "delete" class="btn btn-sm text-danger mx-1 " onclick="onDelete(${data})"><i class="fa fa-trash"></i></button>
+								
+									`
+								return data;
+							}
+
+						}
+
+
+
+
+					],
+
+					language: {
+						"processing": "Loading. Please wait ..."
+					}
+				});
+
+		$('#gdata_filter input').unbind();
+		$('#gdata_filter input').bind(
+			'keyup',
+			function (e) {
+				if (e.keyCode == 13) {
+
+					gendataTable.column(0)
+						.search(this.value)
+						.draw();
+				}
+			});
+		console.log(gendataTable);
+
+
+
+	});
+
+	// handle edit
+	function onEdit(id) {
+		console.log('onEdit: row id:', id);
+		let url = `/routingMSISDNs/getRoutingMSISDNs?RoutingMSISDNsID=${id}`;
+		$.get(url, function (RoutingMSISDNs, status) {
+
+			$("#RoutingMSISDNsIDEdit").val(RoutingMSISDNs.routingMSISDNID);
+			$("#RoutingMSISDNsNameEdit").val(RoutingMSISDNs.routingMSISDN);
+
+
+			// show the modal
+			new bootstrap.Modal('#editModal').toggle()
+
+
+
+		});
+	}
+	// handle delete
+	function onDelete(id) {
+		console.log('onDelete: row id:', id);
+
+		let url = `/routingMSISDNs/deleteRoutingMSISDNs?RoutingMSISDNsID=${id}`
+		$('#deleteModal #delRef').attr('href', url);
+		new bootstrap.Modal('#deleteModal').toggle();
+	}
+	//for add 
+	function validaterouting(fieldId, errorMessage) {
+		var shortcode = document.getElementById("routingMSISDN").value;
+		var field = document.getElementById(fieldId);
+		const shortcodeRegex = /^\d+$/;
+
+		var value = field.value.trim();
+		if (!shortcodeRegex.test(value)) {
+
+			field.setAttribute("class", "form-control is-invalid");
+			field.nextElementSibling.innerHTML = errorMessage;
+			//  alert("Shortcode must be a positive 4-digit number.");
+			return false;
+		}
+		else {
+			field.setAttribute("class", "form-control is-valid");
+			field.nextElementSibling.innerHTML = "";
+			return true;
+		}
+	}
+
+	// add modal 
+	$('#closenewModal3').click(function () {
+		$('#editWarning').modal('show');
+	});
+	$('#closenewModal').click(function () {
+		$('#editWarning').modal('show');
+	});
+	$("#closeid").on("click", function () {
+		$('#editWarning').modal('hide');
+
+	});
+	$('#warningCloseBtn').click(function () {
+		reset_all_fields();
+		$('#addModal').modal('hide');
+		$('#editWarning').modal('hide');
+
+	});
+
+	// for edit modal
+	$('#closenewModal4').click(function () {
+		$('#editWarning2').modal('show');
+	});
+	$('#closeEditModal2').click(function () {
+		$('#editWarning2').modal('show');
+	});
+
+	$("#closeid2").on("click", function () {
+		$('#editWarning2').modal('hide');
+
+	});
+	$('#warningCloseBtn2').click(function () {
+		reset_all_fields_Edit()
+		$('#editWarning2').modal('hide');
+
+		$('#editModal').modal('hide');
+	});
+
+	//reset all add modal
+	function reset_all_fields() {
+		var form = document.getElementById("routing-form");
+
+		form.reset();
+		// Get all required form fields
+		const requiredFields = $('input[required]');
+
+		// Loop through each required form field
+		requiredFields.each(function () {
+			// Get the error message element associated with the form field
+			const $error = $(this).next('.error');
+
+			// Remove the error message text and hide the error message element
+			$error.text('').hide();
+
+			// Remove the "required" attribute from the form field
+			//$(this).removeAttr('required');
+		});
+
+		$('#routing-form').find(".form-control").each(function () {
+
+			if ($(this).hasClass("is-invalid")) {
+
+				// Remove the error message text and hide the error message element
+				$(this).removeClass("in");
+				$(this).removeClass("error");
+				$(this).removeClass("blurred");
+				$(this).removeClass("is-invalid");
+				$("#error-message").addClass("d-none");
+
+			}
+			else
+				$(this).removeClass("is-valid");
+
+
+			//location.reload();
+
+		});
+
+
+
+	}
+		//reset all edit modal
+
+	function reset_all_fields_Edit() {
+		var form = document.getElementById("editform");
+
+		form.reset();
+		// Get all required form fields
+		const requiredFields = $('input[required]');
+
+		// Loop through each required form field
+		requiredFields.each(function () {
+			// Get the error message element associated with the form field
+			const $error = $(this).next('.error');
+
+			// Remove the error message text and hide the error message element
+			$error.text('').hide();
+
+			// Remove the "required" attribute from the form field
+			//$(this).removeAttr('required');
+		});
+
+		$('#editform').find(".form-control").each(function () {
+
+			if ($(this).hasClass("is-invalid")) {
+
+				// Remove the error message text and hide the error message element
+				$(this).removeClass("in");
+				$(this).removeClass("error");
+				$(this).removeClass("blurred");
+				$(this).removeClass("is-invalid");
+				$("#error-message2").addClass("d-none");
+
+			}
+			else
+				$(this).removeClass("is-valid");
+
+
+			//location.reload();
+
+		});
+
+
+
+	}
+	$(document).ready(function () {
+
+
+		$("#routing-form").submit(function (event) {
+			var hasErrors = false;
+
+			// Check each form field for errors
+			$(this).find(".form-control").each(function () {
+				if ($(this).hasClass("is-invalid")) {
+					hasErrors = true;
+				}
+			});
+
+			// If there are errors, prevent form submission and display error messages
+			if (hasErrors) {
+				event.preventDefault();
+				console.log("sjfnkjefnj---" + hasErrors);
+				$("#error-message").text("Please correct the errors in the form.");
+				$("#error-message").removeClass("d-none");
+			}
+			else {
+
+				$("#error-message").addClass("d-none");
+
+			}
+		});
+		$("#editform").submit(function (event) {
+			var hasErrors = false;
+
+			// Check each form field for errors
+			$(this).find(".form-control").each(function () {
+				if ($(this).hasClass("is-invalid")) {
+					hasErrors = true;
+				}
+			});
+
+			// If there are errors, prevent form submission and display error messages
+			if (hasErrors) {
+				event.preventDefault();
+				console.log("hasErrors---" + hasErrors);
+				$("#error-message2").text("Please correct the errors in the form.");
+				$("#error-message2").removeClass("d-none");
+			}
+			else {
+
+				$("#error-message2").addClass("d-none");
+
+			}
+		});
+	});
+
+</script>

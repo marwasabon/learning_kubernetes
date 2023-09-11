@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="frag/head">
+</th:block>
+
+<body>
+	<div id="app">
+		<th:block th:replace="frag/aside">
+		</th:block>
+		<div id="main" class='layout-slim-navbar'>
+			<th:block th:replace="frag/header">
+			</th:block>
+			<div id="main-content">
+				<div class="row">
+
+					<div class="col-md-12">
+
+						<div class="card shadow-sm">
+							<div
+								class="card-header d-flex justify-content-between align-items-center pb-0">
+								<div class="d-flex align-items-center">
+									<button class="btn btn-light btn-back me-3">
+										<i class="fa fa-arrow-left"></i>
+									</button>
+									<h6 class="card-title d-flex m-0"> ShortCode List</h6>
+								</div>
+								<ul class="list-inline d-flex mb-0">
+									<li class="list-inline-item"  sec:authorize="hasAnyAuthority('Corporate Business Solution','admin')" ><a th:href="@{/shortcode/list}"
+										class="btn btn-sm btn-primary" data-bs-toggle="modal"
+										data-bs-target="#newModal" data-whatever="@mdo"> <i
+											class="fas fa-plus-circle" ></i> Add ShortCode
+									</a></li>
+								</ul>
+							</div>
+							<div class="card-content">
+								<div class="card-body">
+									<table class="table separate-rows nowrap" id="ShortCodeTable">
+										<thead>
+
+											<tr>
+												<th>#</th>												
+												<th>ShortCode No</th>
+												<th>Follow-up Number</th>
+												<th>Customer Name</th>
+												<th>Zain Requester Account</th>
+												<th>ShortCode Price</th>
+												<th>Status</th>
+												<th>Expiry Date</th>
+												<th>Comment</th>
+											    <th>Actions</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
+
+		<!-- include modals -->
+		<th:block th:replace="shortcode/shortcode.modals"></th:block>
+
+
+		<th:block th:replace="frag/scripts"></th:block>
+
+
+		<script th:replace="shortcode/shortcode.script"></script>
+</div>
+
+</body>
+
+
+</html>

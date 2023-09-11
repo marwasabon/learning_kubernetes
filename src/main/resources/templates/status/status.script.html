@@ -1,0 +1,157 @@
+<script>
+
+
+	// Function to clear the data
+
+	//reset all fields after pressing close
+	function reset_all_fields() {
+		console.log("hhhhhh");
+		addform.reset();
+		// Get all required form fields
+		const StatusName = $('StatusName');
+
+
+		StatusName.text('').hide;
+
+	}
+	// datatable config
+	console.log("are you working");
+	var gendataTable = $('#StatusTable')
+
+		.DataTable(
+			{
+				ajax: {
+
+					contentType: 'application/json',
+					url: '/statuses/all',
+					type: 'Get'
+
+				},
+				lengthMenu: [5, 10, 20, 50, 100],
+				columns: [
+
+					{
+						data: 'statusName',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{
+						data: 'statusName'
+					},
+					{
+
+						data: 'statusID',
+						"render": function (data,
+							type,
+							row,
+							meta) {
+
+							data = `
+                                            
+
+                                                <button class="btn btn-sm btn-light mx-1" onclick="onEdit(${data})"><i class="fa fa-pen"></i></button>
+
+                                                <button class="btn btn-sm text-danger mx-1" onclick="onDelete(${data})"><i class="fa fa-trash"></i></button>
+												
+													`
+							return data;
+						}
+
+					}
+
+
+
+
+				],
+
+				language: {
+					"processing": "Loading. Please wait ..."
+				}
+			});
+
+	$('#gdata_filter input').unbind();
+	$('#gdata_filter input').bind(
+		'keyup',
+		function (e) {
+			if (e.keyCode == 13) {
+
+				gendataTable.column(0)
+					.search(this.value)
+					.draw();
+			}
+		});
+
+
+
+
+	// handle edit
+	function onEdit(id) {
+		console.log('onEdit: row id:', id);
+		let url = `/statuses/getStatus?StatusID=${id}`;
+		$.get(url, function (Status, status) {
+
+			$("#statusIDEdit").val(Status.statusID);
+			$("#ststusNameEdit").val(Status.statusName);
+
+
+			// show the modal
+			new bootstrap.Modal('#editModal').toggle()
+
+
+
+		});
+	}
+
+
+
+	// handle delete
+	function onDelete(id) {
+		console.log('onDelete: row id:', id);
+
+		let url = `/statuses/deleteStatus?StatusID=${id}`
+		$('#deleteModal #delRef').attr('href', url);
+		new bootstrap.Modal('#deleteModal').toggle();
+	}
+
+	// add modal 
+	$('#closenewModal3').click(function () {
+		$('#editWarning').modal('show');
+	});
+	$('#closenewModal').click(function () {
+		$('#editWarning').modal('show');
+	});
+	$("#closeid").on("click", function () {
+		$('#editWarning').modal('hide');
+
+	});
+	$('#warningCloseBtn').click(function () {
+		const addform = $('addform');
+		var form = document.getElementById("addform");
+
+		form.reset();
+		$('#addModal').modal('hide');
+		$('#editWarning').modal('hide');
+
+	});
+
+	// for edit modal
+	$('#closenewModal4').click(function () {
+		$('#editWarning2').modal('show');
+	});
+	$('#closeEditModal2').click(function () {
+		$('#editWarning2').modal('show');
+	});
+
+	$("#closeid2").on("click", function () {
+		$('#editWarning2').modal('hide');
+
+	});
+	$('#warningCloseBtn2').click(function () {
+		$('#editWarning2').modal('hide');
+
+		$('#editModal').modal('hide');
+	});
+
+
+</script>

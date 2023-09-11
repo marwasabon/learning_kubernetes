@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="frag/head">
+</th:block>
+
+<body>
+
+	<div id="app">
+		<th:block th:replace="frag/aside">
+		</th:block>
+		<div id="main" class='layout-slim-navbar'>
+			<th:block th:replace="frag/header">
+			</th:block>
+			<div id="main-content">
+
+				<div class="row">
+
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col">
+								<div class="bg-white p-3 rounded shadow-sm">
+									<form action="#" th:action="@{/setsegmentsFilters}" th:object="${FilterOptions}"
+										id="from" method="post">
+										<div class="row row-cols-4">
+
+
+											<div class="form-group">
+												<label>Filter by:</label> <select class="form-select selectpicker"
+													id="filterOptionsID" name="filterby">
+													<option value="" selected="selected">Select</option>
+													<option th:each="filterOptions : ${filterOptions}"
+														th:value="${filterOptions}" th:text="${filterOptions}">
+													</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>From</label> <input class="form-control" type="date"
+													id="datepicker" name="fromDate"
+													onblur="validateField('datepicker', 'Please enter from Date')"
+													required="required">
+												<span class="invalid-feedback"></span>
+											</div>
+											<div class="form-group">
+												<label>To</label> <input class="form-control" type="date"
+													id="datepickerTo" name="toDate"
+													onblur="validateField('datepickerTo', 'Please enter to Date')"
+													required="required">
+												<span class="invalid-feedback"></span>
+											</div>
+
+											<div class="row">
+												<div class="update ml-auto mr-auto">
+													<button class="btn btn-primary" id="submit2"
+														style="margin-top: 34px;" type="button">Filter</button>
+												</div>
+
+
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--<div class="modal" id="errorModal" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Error</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p id="errorMessage"></p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>-->
+					<div class="modal" id="errorModal" tabindex="-1">
+						<div class="modal-dialog" style="border-color: red;">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" style="color: red;">Error</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p id="errorMessage"></p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+
+						<div class="row my-4">
+
+							<div class="col-6">
+								<figure class="highcharts-figure">
+
+									<div id="statusChartContainer" class="bg-white p-3 rounded shadow-sm fade"></div>
+								</figure>
+								<canvas class="" id="statusChart"></canvas>
+							</div>
+
+							<div class="col-6">
+								<figure class="highcharts-figure">
+
+									<div id="statusChartContainer2" class="bg-white p-3 rounded shadow-sm fade">
+										<canvas class="" id="statusChart2"></canvas>
+									</div>
+								</figure>
+							</div>
+
+						</div>
+
+
+
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
+
+
+
+
+		<th:block th:replace="frag/scripts"></th:block>
+		<th:block th:replace="home.script"></th:block>
+	</div>
+</body>
+
+</html>

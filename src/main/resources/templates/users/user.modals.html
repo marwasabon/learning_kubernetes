@@ -1,0 +1,180 @@
+<!--Add Modal -->
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+	<form th:action="@{/users/saveUser}" th:object="${User}" method="POST">
+
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addModalLabel">Add new User</h5>
+					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="row">
+
+						<div class="col-12">
+							<div class="row">
+
+
+								<div class="form-group" hidden>
+									<label>User ID </label> <input type="text" class="form-control" id="id" name="id">
+								</div>
+
+
+								<div class="form-group">
+									<label>User Name </label> <input type="text" class="form-control" id="UserName"
+										name="userName" required>
+								</div>
+
+
+								<div class="form-group">
+									<label>Email </label> <input type="text" class="form-control" id="userEamil"
+										name="email" required>
+								</div>
+
+
+
+
+								<div class="form-group">
+									<label>full Name </label> <input type="text" class="form-control" id="fullName"
+										name="fullName" required>
+								</div>
+
+
+
+								<!-- Rounded switch -->
+								<div class="form-group">
+									<label>Active </label> <br> <label class="switch">
+										<input type="checkbox" id="toggle" checked="checked">
+										<span class="slider round"> <input type="hidden" id="toggle-value" name="status"
+												value="1">
+										</span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label>Roles</label> <select class="form-select selectpicker" id="role" name="role"
+										required>
+										<option value="" selected="selected">Select</option>
+										<option th:each="Role:${Roles}" th:value="${Role.id}" th:text="${Role.name}">
+										</option>
+
+									</select>
+									<div th:if="${warningMessage}" class="alert alert-warning">
+										<span th:text="${warningMessage}"></span>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-sm btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-sm btn-primary">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>
+<!--  add Modal -->
+
+<!--Edit Modal -->
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+	<form th:action="@{/users/updateUser}" th:object="${User}" id ="updateform" method="POST">
+
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">Edit User</h5>
+					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="form-group" hidden>
+						<label for="recipient-name" class="col-form-label">User ID
+						</label> <input type="text" class="form-control" id="UserIDEdit" name="ID">
+					</div>
+					<div class="form-group">
+						<label>User Name</label>
+						<input type="text" class="form-control" id="UserNameEdit" name="userName" required></input>
+					</div>
+
+					<div class="form-group">
+						<label>Email</label>
+						<input type="text" class="form-control" id="UserEmailEdit" name="email" required></input>
+					</div>
+
+					<div class="form-group">
+						<label>full Name </label> <input type="text" class="form-control" id="UserNameEdit2"
+							name="fullName" required>
+					</div>
+					<!-- Rounded switch -->
+					<div class="form-group">
+						<label>Active </label> <br> <label class="switch">
+							<input type="checkbox" id="toggle1" checked="checked">
+							<span class="slider round"> <input type="hidden" id="toggle-value1" name="status" value="1">
+							</span>
+						</label>
+					</div>
+
+
+					<div class="form-group">
+						<label>Roles</label> <select class="form-select selectpicker" id="roles" name="role" required>
+							<option value="" selected="selected">Select</option>
+							<option th:each="Role:${Roles}" th:value="${Role.id}" th:text="${Role.name}"></option>
+
+
+						</select>
+					</div>
+					
+							<div id="warning-message" style="display: none; color: red;">
+							  Your role has changed. you will be logged out.
+							</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-sm btn-primary">Save</button>
+				</div>
+
+			</div>
+		</div>
+	</form>
+
+</div>
+<!--  edit Modal -->
+
+<!-- delete modal-->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+	aria-hidden="true">
+
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteModalLabel">Delete User</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="container">
+				<p>Are you sure you want to delete this User?</p>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<a href="" class="btn btn-sm btn-danger" id="delRef">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!--delete modal -->
