@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+  namespace: myapp
+  labels:
+    app: mysql
+spec:
+  containers:
+  - name: mysql
+    image: mysql:8
+    ports:
+    - containerPort: 3306
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: "password"
+    - name: MYSQL_DATABASE
+      value: "shortcode"
+    volumeMounts:
+    - name: mysql-storage
+      mountPath: /var/lib/mysql
+  volumes:
+  - name: mysql-storage
+    emptyDir: {}   # simple ephemeral storage; or use PVC if you want persistence
+
