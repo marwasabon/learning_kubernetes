@@ -1,5 +1,5 @@
 {
-  "title": "Kubernetes Spring Boot Deployment",
+  "title": "Kubernetes Spring Boot Deployment ",
   "description": "Deploy Spring Boot app using Pods, ReplicaSets, and Deployments",
   "difficulty": "Beginner",
   "time": "20 minutes",
