@@ -1,0 +1,28 @@
+﻿services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: shortcode
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    image: silversabon/springboot-app:latest
+    container_name: springboot-app
+    depends_on:
+      - mysql
+    ports:
+      - "8030:8030"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/shortcode
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+
+volumes:
+  mysql_data:
