@@ -1,0 +1,22 @@
+{
+  "title": "Kubernetes Spring Boot Deployment ",
+  "description": "Deploy Spring Boot app using Pods, ReplicaSets, and Deployments",
+  "difficulty": "Beginner",
+  "time": "20 minutes",
+  "details": {
+    "steps": [
+      {
+        "title": "Deploy Spring Boot Application",
+        "text": "steps/step1.md"
+      }
+    ]
+  },
+  "environment": {
+    "ui": {
+      "hideIntro": false
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes"
+  }
+}
