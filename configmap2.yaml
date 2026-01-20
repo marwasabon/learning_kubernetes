@@ -25,16 +25,16 @@ spec:
           value: root
         - name: SPRING_DATASOURCE_PASSWORD
           value: password
-          
         - name: CONFIGURATION_FILENAME
           valueFrom:
             configMapKeyRef:
-              name: example-config #name of our configmap object
+              name: example-config
               key: config_enabled
         volumeMounts:
-          - name: config-volume
-            mountPath: /configs/
+        - name: config-volume
+          mountPath: /configs/
+          readOnly: true
       volumes:
       - name: config-volume
         configMap:
-          name: example-config #name of our configmap object
+          name: example-config
