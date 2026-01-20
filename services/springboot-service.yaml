@@ -10,5 +10,5 @@ spec:
     - protocol: TCP
       port: 8030
       targetPort: 8030
-  type: LoadBalancer
+  type: ClusterIP
 

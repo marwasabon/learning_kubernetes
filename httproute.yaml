@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: springboot-route
+  namespace: default        # Same namespace as Gateway
+spec:
+  parentRefs:
+    - name: gateway-api      # Gateway in default
+  hostnames:
+    - "portf.tech"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: springboot-service
+          namespace: myapp   # service is in myapp
+          port: 8030
+
