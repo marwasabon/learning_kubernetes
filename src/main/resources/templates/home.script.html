@@ -1,5 +1,48 @@
 <script>
 	//showStatusChart();
+	$(document).ready(function () {
+		var currentDate = new Date();
+		var currentMonth = currentDate.toLocaleString('default', {month: 'long'});
+
+		// Update the heading text with the current month
+		var currentMonthHeading = document.getElementById('currentMonthHeading');
+		currentMonthHeading.innerHTML = 'All ShortCodes in ' + currentMonth;
+
+
+		// Make aaa GET request to the /allsss endpoint
+		fetch('/shortcodes/allBymonth')
+			.then(response => response.json())
+			.then(data => {
+				// Update the content of the cards with the retrieved data
+				const priceCard = document.querySelector('.info-box:nth-child(1) .big');
+				const articlesCard = document.querySelector('.info-box:nth-child(2) .big');
+				const executivesCard = document.querySelector('.info-box:nth-child(3) .big');
+				// Iterate over the data array and update the card content accordingly
+				data.forEach(entry => {
+					const status = entry[0];
+					const count = entry[1];
+
+					if (status === "Disconnect" || status === "DISCONNECT") {
+						priceCard.textContent = status + ', ' + count;
+					}
+					else if (status === "New" || status === "new") {
+						articlesCard.textContent = status + ', ' + count;;
+
+					} else if (status === "Renewal" || status === "Renew") {
+						executivesCard.textContent = status + ', ' + count;;
+					}
+				});
+
+				//	conversationsCard.textContent = data[3][1];
+			})
+
+			.catch(error => {
+				console.error('Error:', error);
+			});
+	});
+
+
+
 
 	function showStatusChart() {
 		document.getElementById('statusChartContainer').classList.add('show');
@@ -288,7 +331,6 @@
 
 			}]
 		});
-
 
 	}
 </script>
