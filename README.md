@@ -1,5 +1,6 @@
+<<<<<<< HEAD
 [2:29 PM] Marwa Jaberalla Sabon Bashir
-
+change 1 to dev
 # Shortcode Application
 
 
@@ -37,3 +38,6 @@ git clone http://172.20.2.102/enterprise-systems-development/zain-shortcode.git
 
 
 This project is licensed for Zain company.
+=======
+
+>>>>>>> refs/heads/springboot-app
